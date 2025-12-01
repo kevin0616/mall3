@@ -6,52 +6,32 @@ import { useState } from "react";
 
 function Header() {
     const { user, authenticated, logout } = usePrivy();
-    const [open, setOpen] = useState(false);
 
     return (
         <div>
             <header className="flex justify-between items-center p-4 bg-gray-100 shadow">
             <div className="relative">
-                <div className="text-xl font-bold cursor-pointer" onClick={() => setOpen(!open)}>
+                <div className="text-xl font-bold">
                     Mall3
                 </div>
-
-                {/* Dropdown */}
-                {open && (
-                    <div className="absolute left-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
-                        <Link 
-                            href="/"
-                            className="block px-4 py-2 hover:bg-gray-100"
-                        >
-                            Page 1
-                        </Link>
-                        <Link 
-                            href="/login"
-                            className="block px-4 py-2 hover:bg-gray-100"
-                        >
-                            Page 2
-                        </Link>
-                    </div>
-                )}
             </div>
+            <div className="flex gap-10 items-center justify-center">
+                <Link href="/market">
+                    Market
+                </Link>
+                <Link href="/profile">
+                    Profile
+                </Link>
             { !authenticated ? 
             (
-                <div>
-                    <Link href="/login">
-                        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            Login
-                        </button>
-                    </Link>
-                </div>
-            ):(
-                <div>
-                    Hi, {user?.wallet?.address}
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onClick={logout}>
-                        Logout
-                    </button>
-                </div>
+                <Link href="/login">
+                    <button>Login</button>
+                </Link>  
+            ):(  
+                <button onClick={logout}>Logout</button>
             )
             }
+            </div>
             </header>
         </div>
   );

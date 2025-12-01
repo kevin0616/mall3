@@ -3,27 +3,53 @@
 import { useEffect, useState } from 'react';
 import { useLoginWithEmail, usePrivy, useCreateWallet, useSendTransaction } from '@privy-io/react-auth';
 import Header from "@/components/Header";
+import { useRouter } from 'next/navigation';
 
 function LoginPage() {
   const { user, authenticated } = usePrivy();
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const {sendCode, loginWithCode} = useLoginWithEmail();
-  const { createWallet } = useCreateWallet();
-  useEffect(() => {
-  if (authenticated && user && !user.wallet) {
-    createWallet().then(wallet => {
-      console.log('wallet created', wallet);
-    }).catch(err => {
-      console.error('wallet create error', err);
-    });
+  const router = useRouter();
+  const {createWallet} = useCreateWallet({
+      onSuccess: ({wallet}) => {
+          console.log('Created wallet ', wallet);
+      },
+      onError: (error) => {
+          console.error('Failed to create wallet with error ', error)
+      }
+  })
+  const loginandcreate = async () => {
+    try {
+      await loginWithCode({ code });   // 等 login 完成
+      router.push('/');
+    } catch (err) {
+      console.error('Login failed', err);
+    }
   }
-}, [authenticated, user]);
 
-  const loginandcreate = () => {
-    loginWithCode({code})
-    
+
+useEffect(() => {
+  console.log("effect")
+  if (!authenticated || !user){
+    console.log('return')
+    console.log(authenticated, user)
+    return
+  } 
+  console.log(user, user.wallet == undefined)
+  if (user.wallet == undefined) {
+    (async () => {
+      console.log("START")
+      try {
+        const wallet = await createWallet();
+        console.log('wallet created', wallet);
+      } catch (err) {
+        console.error('createWallet error', err);
+      }
+    })();
   }
+  console.log(12313278)
+}, [authenticated, user]);
   
   return (
     <div className="min-h-screen flex flex-col">

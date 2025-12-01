@@ -1,6 +1,7 @@
 'use client';
 
 import { PrivyProvider, usePrivy } from '@privy-io/react-auth';
+import {SmartWalletsProvider} from '@privy-io/react-auth/smart-wallets';
 import { ReactNode } from 'react';
 import { sepolia } from "viem/chains";
 
@@ -25,10 +26,24 @@ export default function PrivyProviderWrapper({ children }: Props) {
             createOnLogin: 'users-without-wallets'}
         },
         defaultChain: sepolia,
-        
       }}
     >
-      <Loading>{children}</Loading>
+      <SmartWalletsProvider config={{
+        paymasterContext: {
+          mode: 'SPONSORED',
+          calculateGasLimits: true,
+          expiryDuration: 300,
+          sponsorshipInfo: {
+            webhookData: {},
+            smartAccountInfo: {
+              name: 'BICONOMY',
+              version: '2.0.0'
+            }
+          }
+        }
+      }}>
+        <Loading>{children}</Loading>
+      </SmartWalletsProvider>
     </PrivyProvider>
   );
 }
