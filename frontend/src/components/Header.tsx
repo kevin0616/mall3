@@ -11,8 +11,10 @@ function Header() {
         <div>
             <header className="flex justify-between items-center p-4 bg-gray-100 shadow">
             <div className="relative">
-                <div className="text-xl font-bold">
-                    Mall3
+                <div className="text-3xl font-bold">
+                    <Link href="/">
+                        Mall3
+                    </Link>
                 </div>
             </div>
             <div className="flex gap-10 items-center justify-center">

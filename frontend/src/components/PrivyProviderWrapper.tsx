@@ -28,20 +28,7 @@ export default function PrivyProviderWrapper({ children }: Props) {
         defaultChain: sepolia,
       }}
     >
-      <SmartWalletsProvider config={{
-        paymasterContext: {
-          mode: 'SPONSORED',
-          calculateGasLimits: true,
-          expiryDuration: 300,
-          sponsorshipInfo: {
-            webhookData: {},
-            smartAccountInfo: {
-              name: 'BICONOMY',
-              version: '2.0.0'
-            }
-          }
-        }
-      }}>
+      <SmartWalletsProvider>
         <Loading>{children}</Loading>
       </SmartWalletsProvider>
     </PrivyProvider>

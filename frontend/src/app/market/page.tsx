@@ -7,6 +7,7 @@ import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
 import LogicABI from '../../abis/MallLogic.json'
 import { ethers, Interface, parseEther } from 'ethers';
 
+import { sepolia } from 'viem/chains';
 
 function ListsPage() {
   const { client } = useSmartWallets();
@@ -22,6 +23,32 @@ function ListsPage() {
     const payee = '0xA33dC84074cDD703ACDf16ddeFf3831aB8eDd7d9'
     const iface = new Interface(LogicABI);
     const calldata = iface.encodeFunctionData("createPending", [payee]);
+    client!.sendTransaction({
+        chain: sepolia,
+        to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
+        value: BigInt(price),
+        data: calldata as `0x${string}`,
+        /*calls: [
+            // Approve transaction
+            {
+                to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
+                value: BigInt(price),
+                data: calldata as `0x${string}`,
+            },
+            // Transfer transaction
+            {
+                to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
+                value: BigInt(price),
+                data: calldata as `0x${string}`,
+            }
+        ]*/
+    }).then((txHash: String) => {
+        console.log(txHash);
+    });
+
+    /*const payee = '0xA33dC84074cDD703ACDf16ddeFf3831aB8eDd7d9'
+    const iface = new Interface(LogicABI);
+    const calldata = iface.encodeFunctionData("createPending", [payee]);
     const tx = await sendTransaction({
       to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS,
       data: calldata,
@@ -29,7 +56,7 @@ function ListsPage() {
     },{
     sponsor: true
   });
-    console.log('Transaction result:', tx);
+    console.log('Transaction result:', tx);*/
   };
   
   return (
