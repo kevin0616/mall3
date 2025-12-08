@@ -20,6 +20,19 @@
 				"type": "uint256"
 			}
 		],
+		"name": "collect",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
 		"name": "confirm",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -31,6 +44,11 @@
 				"internalType": "address",
 				"name": "payee",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "delaySeconds",
+				"type": "uint256"
 			}
 		],
 		"name": "createPending",
@@ -70,6 +88,11 @@
 			{
 				"components": [
 					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
 						"internalType": "address",
 						"name": "payer",
 						"type": "address"
@@ -90,9 +113,9 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "bool",
-						"name": "executed",
-						"type": "bool"
+						"internalType": "enum EthEscrow.Status",
+						"name": "status",
+						"type": "uint8"
 					}
 				],
 				"internalType": "struct EthEscrow.Payment",
@@ -110,6 +133,11 @@
 			{
 				"components": [
 					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
 						"internalType": "address",
 						"name": "payer",
 						"type": "address"
@@ -130,9 +158,9 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "bool",
-						"name": "executed",
-						"type": "bool"
+						"internalType": "enum EthEscrow.Status",
+						"name": "status",
+						"type": "uint8"
 					}
 				],
 				"internalType": "struct EthEscrow.Payment[]",
@@ -167,6 +195,11 @@
 		"name": "payments",
 		"outputs": [
 			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
 				"internalType": "address",
 				"name": "payer",
 				"type": "address"
@@ -187,9 +220,9 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "bool",
-				"name": "executed",
-				"type": "bool"
+				"internalType": "enum EthEscrow.Status",
+				"name": "status",
+				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",

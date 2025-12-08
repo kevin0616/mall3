@@ -5,14 +5,13 @@ import { useLoginWithEmail, usePrivy, useCreateWallet, useSendTransaction } from
 import Header from "@/components/Header";
 import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
 import LogicABI from '../../abis/MallLogic.json'
-import { ethers, Interface, parseEther } from 'ethers';
+import { ethers, Interface } from 'ethers';
 
 import { sepolia } from 'viem/chains';
 
 function ListsPage() {
   const { client } = useSmartWallets();
   const { user, authenticated } = usePrivy();
-  console.log(client,'this is clent')
   const buy = (price: string) => {
     console.log(price)
     onSendTransaction(price)
@@ -20,9 +19,9 @@ function ListsPage() {
 
   const {sendTransaction} = useSendTransaction();
   const onSendTransaction = async (price: string) => {
-    const payee = '0xA33dC84074cDD703ACDf16ddeFf3831aB8eDd7d9'
+    const payee = process.env.NEXT_PUBLIC_SELLER_ADDRESS
     const iface = new Interface(LogicABI);
-    const calldata = iface.encodeFunctionData("createPending", [payee]);
+    const calldata = iface.encodeFunctionData("createPending", [payee, 3600]);
     client!.sendTransaction({
         chain: sepolia,
         to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
