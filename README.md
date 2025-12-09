@@ -1,5 +1,5 @@
 # Mall3  
-*A Web3 marketplace that offer Web2 user experience*
+*A Web3 marketplace that offers Web2 user experience*
 
 ## Features  
 - Email login (create smart account automatically)  
