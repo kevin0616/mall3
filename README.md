@@ -1,4 +1,4 @@
-# mall3  
+# Mall3  
 *A Web3 marketplace that offer Web2 user experience*
 
 ## Features  
