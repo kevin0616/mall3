@@ -21,6 +21,9 @@ function Header() {
                 <Link href="/market">
                     Market
                 </Link>
+                <Link href="/manage">
+                    Manage
+                </Link>
                 <Link href="/profile">
                     Profile
                 </Link>
