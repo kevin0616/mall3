@@ -66,7 +66,7 @@ function sellerTable({ history }: HistoryListProps) {
             </thead>
             <tbody>
             {history.filter((item: any) => {
-                return item[2] == user?.smartWallet?.address && (item[5] == 1 || item[5] == 3)
+                return item[2] == user?.smartWallet?.address && (item[5] == 1 || item[5] == 3 || (item[5] == 2 && new Date(Number(item[4]) * 1000) < new Date()))
                 }).map((row, idx) => (
                 <tr key={idx} className="hover:bg-gray-100">
                     <td className="border border-gray-300 px-2 py-1">
