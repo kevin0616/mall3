@@ -4,66 +4,56 @@ import { useEffect, useState } from 'react'
 import { useLoginWithEmail, usePrivy, useCreateWallet, useSendTransaction } from '@privy-io/react-auth'
 import Header from "@/components/Header"
 import { useSmartWallets } from '@privy-io/react-auth/smart-wallets'
-import LogicABI from '../../abis/MallLogic.json'
-import { ethers, Interface } from 'ethers'
+import ProductsABI from '../../abis/MallProducts.json'
+import { ethers, Interface, JsonRpcProvider } from 'ethers'
 import { sepolia } from 'viem/chains'
 import AddPopup from './addPopup'
 
 function ListsPage() {
   const { client } = useSmartWallets()
   const { user, authenticated } = usePrivy()
+  const provider = new JsonRpcProvider("https://sepolia.infura.io/v3/a8dd2e6448dc46359a8c9e391e5ca6d8")
   const [popup, setPopup] = useState(false)
+  const [products, setProducts] = useState<any[]>([])
 
-  const buy = (price: string) => {
-    console.log(price)
-    onSendTransaction(price)
-  }
+  useEffect(() => {
+      const fetchData = async () => {
+          if(authenticated){
+              try {
+                  const contract = new ethers.Contract(process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS as `0x${string}`, ProductsABI, provider);
+                  const products = await contract.getProducts();
+                  const data = products
+                  /*.filter((item: any) => {
+                      return item[0] == user?.smartWallet?.address
+                  })*/
+                  .map((item: any) => {
+                      return Array.from(item);
+                  });
+                  console.log(data)
+                  setProducts(data);
+              } catch (err) {
+                  console.error("Error fetching data:", err);
+              }
+          }
+        };
+
+        fetchData();
+        
+    }, [authenticated]);
 
   const remove = (id: string) => {
-
-  }
-
-
-  const {sendTransaction} = useSendTransaction();
-  const onSendTransaction = async (price: string) => {
-    const payee = process.env.NEXT_PUBLIC_SELLER_ADDRESS
-    const iface = new Interface(LogicABI);
-    const calldata = iface.encodeFunctionData("createPending", [payee, 3600]);
+    console.log("removing ", id)
+    const iface = new Interface(ProductsABI)
+    const calldata = iface.encodeFunctionData("remove", [Number(id)])
     client!.sendTransaction({
-        chain: sepolia,
-        to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
-        value: BigInt(price),
-        data: calldata as `0x${string}`,
-        /*calls: [
-            // Approve transaction
-            {
-                to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
-                value: BigInt(price),
-                data: calldata as `0x${string}`,
-            },
-            // Transfer transaction
-            {
-                to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
-                value: BigInt(price),
-                data: calldata as `0x${string}`,
-            }
-        ]*/
+      chain: sepolia,
+      to: process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS as `0x${string}`,
+      data: calldata as `0x${string}`,
     }).then((txHash: String) => {
         console.log(txHash);
-    });
-
-    /*const payee = '0xA33dC84074cDD703ACDf16ddeFf3831aB8eDd7d9'
-    const iface = new Interface(LogicABI);
-    const calldata = iface.encodeFunctionData("createPending", [payee]);
-    const tx = await sendTransaction({
-      to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS,
-      data: calldata,
-      value: price,
-    },{
-    sponsor: true
-  });
-    console.log('Transaction result:', tx);*/
-  };
+        window.location.reload()
+    })
+  }
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -71,19 +61,25 @@ function ListsPage() {
       <main className="flex-1 flex flex-col items-center px-10 py-20 bg-gray-50">
         <div className="w-full max-w-6xl">
           <div className="grid grid-cols-5 gap-12">
-            <div>
-              <h2 className="text-2xl font-semibold mb-2">A Pear</h2>
-              <p className="text-gray-600 mb-2">$20</p>
-              <p className="text-gray-600 mb-2">description</p>
-              <img
-                src="/pear.jpg"
-                className="w-full h-40 object-cover rounded-xl shadow"
-                alt=""
-              />
-              <button onClick={(e) => {remove('20')}} className="my-2 py-2">
-                  Remove
-              </button>
-            </div>
+            
+            {products.filter((item: any) => {
+                return item[1] == user?.smartWallet?.address && item[6] == false
+                }).map((row, idx) => (
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-2">{row[3]}</h2>
+                    <p className="text-gray-600 mb-2">${Number(row[2])}</p>
+                    <p className="text-gray-600 mb-2 h-10">{row[4]}</p>
+                    <img
+                      src={row[5]}
+                      className="w-full h-40 object-cover rounded-xl shadow"
+                      alt=""
+                    />
+                    <button onClick={(e) => {remove(row[0])}} className="my-2 py-2">
+                        Remove
+                    </button>
+                  </div>
+            ))}
+
             <div
             onClick={() => {setPopup(!popup)}}
             className="flex justify-center items-center rounded-xl cursor-pointer hover:bg-gray-100 transition text-6xl text-gray-400">
