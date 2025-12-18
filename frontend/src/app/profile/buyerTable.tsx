@@ -28,8 +28,6 @@ function buyerTable({ history }: HistoryListProps) {
     }
 
     const Cancel = async (idx: number) => {
-        console.log(`cancelling ${idx}`)
-        alert('Are you sure to cancel this transaction?')
         const iface = new Interface(LogicABI);
         const calldata = iface.encodeFunctionData("cancel", [idx]);
         client!.sendTransaction({
@@ -56,8 +54,6 @@ function buyerTable({ history }: HistoryListProps) {
     }
 
     const Confirm = (idx: number) => {
-        console.log(`confirming${idx}`)
-        alert("Are you sure to confirm this transaction")
         const iface = new Interface(LogicABI);
         const calldata = iface.encodeFunctionData("confirm", [idx]);
         client!.sendTransaction({
@@ -84,15 +80,15 @@ function buyerTable({ history }: HistoryListProps) {
     }
 
     return (
-        <table className="table-auto w-full">
+        <table className="table-auto w-full my-5">
             <thead>
             <tr className="bg-gray-400 text-white">
-                <th className="border border-gray-300 px-2 py-1">Seller</th>
-                <th className="border border-gray-300 px-2 py-1">Price</th>
-                <th className="border border-gray-300 px-2 py-1">Date</th>
-                <th className="border border-gray-300 px-2 py-1">Status</th>
-                <th className="border border-gray-300 px-2 py-1"></th>
-                <th className="border border-gray-300 px-2 py-1"></th>
+                <th className="border border-gray-300 px-1 py-1">Seller</th>
+                <th className="border border-gray-300 px-1 py-1">Price</th>
+                <th className="border border-gray-300 px-1 py-1">Date</th>
+                <th className="border border-gray-300 px-1 py-1">Status</th>
+                <th className="border border-gray-300 px-1 py-1"></th>
+                <th className="border border-gray-300 px-1 py-1"></th>
             </tr>
             </thead>
             <tbody>
@@ -100,28 +96,33 @@ function buyerTable({ history }: HistoryListProps) {
                 return item[1] == user?.smartWallet?.address
                 }).map((row, idx) => (
                 <tr key={idx} className="hover:bg-gray-100">
-                    <td className="border border-gray-300 px-2 py-1">
+                    <td className="border border-gray-300 px-1 py-1 text-center h-12">
                         {row[2]}
                     </td>
-                    <td className="border border-gray-300 px-2 py-1">
+                    <td className="border border-gray-300 px-1 py-1 text-center">
                         {row[3]}
                     </td>
-                    <td className="border border-gray-300 px-2 py-1">
+                    <td className="border border-gray-300 px-1 py-1 text-center">
                         {Convert(row[4])}
                     </td>
-                    <td className="border border-gray-300 px-2 py-1">
+                    <td className="border border-gray-300 px-1 py-1 text-center">
                         {STATUS[row[5]]}
                     </td>
-                    { row[5] == 0 ? <div>
-                    <td className="border border-gray-300 px-2 py-1">
-                        <button onClick={() => Cancel(row[0])}>Cancel</button>
+                    
+                    <td className="border border-gray-300 px-1 py-1 text-center">
+                        {row[5] == 0 ? (
+                            <button onClick={() => Cancel(row[0])}>Cancel</button>
+                        ) : (
+                            <span className="text-gray-400">—</span>
+                        )}
                     </td>
-                    <td className="border border-gray-300 px-2 py-1">
-                        <button onClick={() => Confirm(row[0])}>Confirm</button>
+                    <td className="border border-gray-300 px-1 py-1 text-center">
+                        {row[5] == 0 ? (
+                            <button onClick={() => Confirm(row[0])}>Confirm</button>
+                        ) : (
+                            <span className="text-gray-400">—</span>
+                        )}
                     </td>
-                    </div>
-                    : <div><td></td><td></td></div>
-                    }
                 </tr>
             ))}
             </tbody>

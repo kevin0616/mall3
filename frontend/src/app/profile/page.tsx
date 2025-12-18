@@ -1,14 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import {  usePrivy } from '@privy-io/react-auth';
-import Header from "@/components/Header";
-import { ethers, Interface, JsonRpcProvider } from 'ethers';
+import { useEffect, useState } from 'react'
+import {  usePrivy } from '@privy-io/react-auth'
+import Header from "@/components/Header"
+import { ethers, Interface, JsonRpcProvider } from 'ethers'
 import LogicABI from '../../abis/MallLogic.json'
-import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
-import { sepolia } from 'viem/chains';
-import BuyerTable from './buyerTable';
-import SellerTable from './sellerTable';
+import BuyerTable from './buyerTable'
+import SellerTable from './sellerTable'
 
 function ProfilePage() {
     const { user, authenticated } = usePrivy();
@@ -21,29 +19,43 @@ function ProfilePage() {
         const fetchBalance = async () => {
             if(authenticated){
                 try {
-                    //const result = await provider.getBalance(user?.wallet?.address as `0x${string}`)
-                    //setBalance(result.toString())
                     const result = await provider.getBalance(user?.smartWallet?.address as `0x${string}`)
                     setBalance(result.toString())
-                    const contract = new ethers.Contract(process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`, LogicABI, provider);
-                    const payments = await contract.getPayments();
+                    const contract = new ethers.Contract(process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`, LogicABI, provider)
+                    const payments = await contract.getPayments()
                     const data = payments
-                    /*.filter((item: any) => {
-                        return item[0] == user?.smartWallet?.address
-                    })*/
                     .map((item: any) => {
-                        return Array.from(item);
+                        return Array.from(item)
                     });
-                    setHistory(data);
+                    setHistory(data)
                 } catch (err) {
-                    console.error("Error fetching balance:", err);
+                    console.error("Error fetching balance:", err)
                 }
             }
         };
 
-        fetchBalance();
+        fetchBalance()
         
-    }, [authenticated]);
+    }, [authenticated])
+
+
+    if (!authenticated) {
+        return (
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-1 flex items-center justify-center bg-gray-50">
+              <div className="text-center">
+                <h2 className="text-2xl font-semibold mb-4">
+                  Please login to view your profile
+                </h2>
+                <p className="text-gray-600">
+                  You need to be logged in to manage your profile.
+                </p>
+              </div>
+            </main>
+          </div>
+        )
+    }
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -57,6 +69,17 @@ function ProfilePage() {
                 </div>
                 <div className="mt-4 space-y-3 text-gray-700 text-lg">
                 <div><span className="font-medium">Balance:</span> {user ? balance : ''}</div>
+                {authenticated && <p>
+                Need test ETH?  
+                <a
+                    href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia"
+                    target="_blank"
+                    className="text-blue-600 underline"
+                >
+                    Get from GCW Faucet
+                </a>
+                </p>
+                }
                 <div><span className="font-medium">Email:</span> {user?.email?.address}</div>
                 {/* <div><span className="font-medium">Address:</span> {user?.wallet?.address}</div> */}
                 <div><span className="font-medium">Address:</span> {user?.smartWallet?.address}</div>

@@ -54,6 +54,24 @@ function ListsPage() {
         window.location.reload()
     })
   }
+
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center bg-gray-50">
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">
+              Please login to view your products
+            </h2>
+            <p className="text-gray-600">
+              You need to be logged in to manage your listings.
+            </p>
+          </div>
+        </main>
+      </div>
+    )
+  }
   
   return (
     <div className="min-h-screen flex flex-col">

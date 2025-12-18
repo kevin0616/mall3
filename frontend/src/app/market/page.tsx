@@ -42,21 +42,9 @@ function ListsPage() {
             }
         ]*/
     }).then((txHash: String) => {
-        console.log(txHash);
-    });
-
-    /*const payee = '0xA33dC84074cDD703ACDf16ddeFf3831aB8eDd7d9'
-    const iface = new Interface(LogicABI);
-    const calldata = iface.encodeFunctionData("createPending", [payee]);
-    const tx = await sendTransaction({
-      to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS,
-      data: calldata,
-      value: price,
-    },{
-    sponsor: true
-  });
-    console.log('Transaction result:', tx);*/
-  };
+        console.log(txHash)
+    })
+  }
   
   return (
     <div className="min-h-screen flex flex-col">
