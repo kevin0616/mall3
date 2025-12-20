@@ -27,8 +27,6 @@ function sellerTable({ history }: HistoryListProps) {
     }
 
     const Collect = async (idx: number) => {
-        console.log(`collecting ${idx}`)
-        alert('Are you sure to collect this transaction?')
         const iface = new Interface(LogicABI);
         const calldata = iface.encodeFunctionData("collect", [idx]);
         client!.sendTransaction({
@@ -50,8 +48,8 @@ function sellerTable({ history }: HistoryListProps) {
                 }
             ]*/
         }).then((txHash: String) => {
-            console.log(txHash);
-        });
+            console.log(txHash)
+        })
     }
 
     return (
@@ -66,7 +64,7 @@ function sellerTable({ history }: HistoryListProps) {
             </thead>
             <tbody>
             {history.filter((item: any) => {
-                return item[2] == user?.smartWallet?.address && (item[5] == 1 || item[5] == 3 || (item[5] == 2 && new Date(Number(item[4]) * 1000) < new Date()))
+                return item[2] == user?.smartWallet?.address && (item[5] == 1 || item[5] == 3 || (item[5] == 0 && new Date(Number(item[4]) * 1000) < new Date()))
                 }).map((row, idx) => (
                 <tr key={idx} className="hover:bg-gray-100">
                     <td className="border border-gray-300 px-2 py-1">
@@ -79,7 +77,7 @@ function sellerTable({ history }: HistoryListProps) {
                         {Convert(row[4])}
                     </td>
                     <td className="border border-gray-300 px-2 py-1">
-                        {row[5] == 1 ? <button onClick={() => Collect(row[0])}>Collect</button> : <label>Finished</label> }
+                        {row[5] == 3 ? <label>Finished</label> : <button onClick={() => Collect(row[0])}>Collect</button> }
                         
                     </td>
                 </tr>

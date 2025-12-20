@@ -106,18 +106,18 @@ function buyerTable({ history }: HistoryListProps) {
                         {Convert(row[4])}
                     </td>
                     <td className="border border-gray-300 px-1 py-1 text-center">
-                        {STATUS[row[5]]}
+                        { row[5] == 0 && new Date(Number(row[4]) * 1000) < new Date() ? "Confirmed" : STATUS[row[5]]}
                     </td>
                     
                     <td className="border border-gray-300 px-1 py-1 text-center">
-                        {row[5] == 0 ? (
+                        {row[5] == 0 && new Date(Number(row[4]) * 1000) > new Date() ? (
                             <button onClick={() => Cancel(row[0])}>Cancel</button>
                         ) : (
                             <span className="text-gray-400">—</span>
                         )}
                     </td>
                     <td className="border border-gray-300 px-1 py-1 text-center">
-                        {row[5] == 0 ? (
+                        {row[5] == 0 && new Date(Number(row[4]) * 1000) > new Date() ? (
                             <button onClick={() => Confirm(row[0])}>Confirm</button>
                         ) : (
                             <span className="text-gray-400">—</span>
