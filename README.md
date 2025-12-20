@@ -34,7 +34,6 @@ cd ../contracts
 # .env setup
 NEXT_PUBLIC_APP_ID='privy-app-id'
 NEXT_PUBLIC_LOGIC_ADDRESS='mallLogicV2-contract-address'
-NEXT_PUBLIC_SELLER_ADDRESS='seller-address'(will be removed))
 NEXT_PUBLIC_PRODUCTS_ADDRESS='mallProducts-contract-address'
 #Pinata token
 NEXT_PUBLIC_JWT = 'PINATA-JWT'
