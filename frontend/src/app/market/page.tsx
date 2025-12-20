@@ -8,16 +8,21 @@ import LogicABI from '../../abis/MallLogic.json'
 import ProductsABI from '../../abis/MallProducts.json'
 import { ethers, Interface, JsonRpcProvider } from 'ethers'
 import { sepolia } from 'viem/chains'
+import { useRouter } from 'next/navigation'
 
 function ListsPage() {
   const { client } = useSmartWallets()
   const { user, authenticated } = usePrivy()
   const provider = new JsonRpcProvider("https://sepolia.infura.io/v3/a8dd2e6448dc46359a8c9e391e5ca6d8")
   const [products, setProducts] = useState<any[]>([])
-  
+  const router = useRouter()
+
 
   const buy = (price: number, seller: string) => {
-    console.log(price, seller)
+    if(!authenticated){
+      alert("Please login first")
+      router.push('/login')
+    } 
     const iface = new Interface(LogicABI);
     const calldata = iface.encodeFunctionData("createPending", [seller, 3600]);
     client!.sendTransaction({
