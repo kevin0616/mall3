@@ -58,11 +58,11 @@ useEffect(() => {
 
       <main className="flex-1 flex items-center justify-center bg-gray-50 px-6 py-20">
         <div className="w-full max-w-md bg-white rounded-xl shadow p-10">
-          <h2 className="text-3xl font-semibold mb-6 text-center">Login</h2>
+          <h2 className="text-3xl font-semibold mb-6 text-center text-black">Login</h2>
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">Email</label>
             <input
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black text-black"
               onChange={(e) => setEmail(e.currentTarget.value)}
               value={email}
               type="email"
@@ -77,7 +77,7 @@ useEffect(() => {
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2">OTP Code</label>
             <input
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black text-black"
               onChange={(e) => setCode(e.currentTarget.value)}
               value={code}
               type="text"

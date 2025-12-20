@@ -1,4 +1,4 @@
-import { Interface } from "ethers";
+import { Interface, parseEther } from "ethers";
 import { useState } from "react";
 import ProductsABI from '../../abis/MallProducts.json'
 import { useSmartWallets } from '@privy-io/react-auth/smart-wallets';
@@ -43,8 +43,9 @@ export default function AddPopup({onClose}: AddPopupProps) {
       )
       const response = await request.json()
       const URI = process.env.NEXT_PUBLIC_PINATA_URL + response.IpfsHash?.toString()
+      const weiPrice = parseEther(price);
       const iface = new Interface(ProductsABI)
-      const calldata = iface.encodeFunctionData("release", [price, name, desc, URI])
+      const calldata = iface.encodeFunctionData("release", [weiPrice, name, desc, URI])
       client!.sendTransaction({
         chain: sepolia,
         to: process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS as `0x${string}`,
