@@ -62,9 +62,9 @@ export default function AddPopup({onClose}: AddPopupProps) {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
       <form onSubmit={release} className="bg-white p-6 rounded-xl w-full max-w-md shadow-xl">
-        <h2 className="text-2xl font-semibold mb-4">Add Product</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-black">Add Product</h2>
 
-        <label className="text-sm font-medium">Product Name</label>
+        <label className="text-sm font-medium text-black">Product Name</label>
         <input
           required
           className="w-full border rounded-lg px-3 py-2 mb-3"
@@ -72,7 +72,7 @@ export default function AddPopup({onClose}: AddPopupProps) {
           onChange={(e) => setName(e.target.value)}
         />
 
-        <label className="text-sm font-medium">Price</label>
+        <label className="text-sm font-medium text-black">Price</label>
         <input
           required
           type="number"
@@ -81,7 +81,7 @@ export default function AddPopup({onClose}: AddPopupProps) {
           onChange={(e) => setPrice(e.target.value)}
         />
 
-        <label className="text-sm font-medium">Description</label>
+        <label className="text-sm font-medium text-black">Description</label>
         <textarea
           className="w-full border rounded-lg px-3 py-2 mb-3"
           rows={3}
@@ -89,7 +89,7 @@ export default function AddPopup({onClose}: AddPopupProps) {
           onChange={(e) => setDesc(e.target.value)}
         />
 
-        <label className="text-sm font-medium">Upload Image</label>
+        <label className="text-sm font-medium text-black">Upload Image</label>
         <input
           type="file"
           accept="image/*"

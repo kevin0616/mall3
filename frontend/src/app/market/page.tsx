@@ -85,32 +85,6 @@ function ListsPage() {
       const iface = new Interface(LogicABI);
       const calldata = iface.encodeFunctionData("createPending", [product.seller, 3600]);
       const hash = await client.sendTransaction({
-import { Fragment, useEffect, useState } from 'react'
-import { useLoginWithEmail, usePrivy, useCreateWallet, useSendTransaction } from '@privy-io/react-auth'
-import Header from "@/components/Header"
-import { useSmartWallets } from '@privy-io/react-auth/smart-wallets'
-import LogicABI from '../../abis/MallLogic.json'
-import ProductsABI from '../../abis/MallProducts.json'
-import { ethers, Interface, JsonRpcProvider } from 'ethers'
-import { sepolia } from 'viem/chains'
-import { useRouter } from 'next/navigation'
-
-function ListsPage() {
-  const { client } = useSmartWallets()
-  const { user, authenticated } = usePrivy()
-  const provider = new JsonRpcProvider("https://sepolia.infura.io/v3/a8dd2e6448dc46359a8c9e391e5ca6d8")
-  const [products, setProducts] = useState<any[]>([])
-  const router = useRouter()
-
-
-  const buy = (price: number, seller: string) => {
-    if(!authenticated){
-      alert("Please login first")
-      router.push('/login')
-    } 
-    const iface = new Interface(LogicABI);
-    const calldata = iface.encodeFunctionData("createPending", [seller, 3600]);
-    client!.sendTransaction({
         chain: sepolia,
         to: process.env.NEXT_PUBLIC_LOGIC_ADDRESS as `0x${string}`,
         value: product.price,
@@ -124,10 +98,10 @@ function ListsPage() {
       setBuyingId(null);
     }
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header/>
+      <Header />
       <main className="flex-1 flex flex-col items-center px-10 py-20 bg-gray-50">
         <div className="w-full max-w-6xl">
           {loading ? (

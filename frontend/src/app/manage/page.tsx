@@ -84,7 +84,7 @@ function ListsPage() {
                 return item[1] == user?.smartWallet?.address && item[6] == false
                 }).map((row, idx) => (
                   <div key={row[0] ?? idx}>
-                    <h2 className="text-2xl font-semibold mb-2">{row[3]}</h2>
+                    <h2 className="text-2xl font-semibold mb-2 text-black">{row[3]}</h2>
                     <p className="text-gray-600 mb-2">${Number(row[2])}</p>
                     <p className="text-gray-600 mb-2 h-10">{row[4]}</p>
                     <img
