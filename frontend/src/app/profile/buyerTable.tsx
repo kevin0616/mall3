@@ -83,10 +83,10 @@ function buyerTable({ history }: HistoryListProps) {
         <table className="table-auto w-full my-5">
             <thead>
             <tr className="bg-gray-400 text-white">
-                <th className="border border-gray-300 px-1 py-1">Seller</th>
-                <th className="border border-gray-300 px-1 py-1">Price</th>
-                <th className="border border-gray-300 px-1 py-1">Date</th>
-                <th className="border border-gray-300 px-1 py-1">Status</th>
+                <th className="border border-gray-300 px-1 py-1 text-black">Seller</th>
+                <th className="border border-gray-300 px-1 py-1 text-black">Price</th>
+                <th className="border border-gray-300 px-1 py-1 text-black">Date</th>
+                <th className="border border-gray-300 px-1 py-1 text-black">Status</th>
                 <th className="border border-gray-300 px-1 py-1"></th>
                 <th className="border border-gray-300 px-1 py-1"></th>
             </tr>
@@ -95,7 +95,7 @@ function buyerTable({ history }: HistoryListProps) {
             {history.filter((item: any) => {
                 return item[1] == user?.smartWallet?.address
                 }).map((row, idx) => (
-                <tr key={idx} className="hover:bg-gray-100">
+                <tr key={idx} className="hover:bg-gray-100 text-black">
                     <td className="border border-gray-300 px-1 py-1 text-center h-12">
                         {row[2]}
                     </td>

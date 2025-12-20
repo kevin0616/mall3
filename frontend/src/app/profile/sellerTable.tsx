@@ -55,18 +55,18 @@ function sellerTable({ history }: HistoryListProps) {
     return (
         <table className="table-auto w-full">
             <thead>
-            <tr className="bg-gray-400 text-white">
-                <th className="border border-gray-300 px-2 py-1">Buyer</th>
-                <th className="border border-gray-300 px-2 py-1">Price</th>
-                <th className="border border-gray-300 px-2 py-1">Date</th>
-                <th className="border border-gray-300 px-2 py-1">Status</th>
+            <tr className="bg-gray-400 text-black">
+                <th className="border border-gray-300 px-2 py-1 text-black">Buyer</th>
+                <th className="border border-gray-300 px-2 py-1 text-black">Price</th>
+                <th className="border border-gray-300 px-2 py-1 text-black">Date</th>
+                <th className="border border-gray-300 px-2 py-1 text-black">Status</th>
             </tr>
             </thead>
             <tbody>
             {history.filter((item: any) => {
                 return item[2] == user?.smartWallet?.address && (item[5] == 1 || item[5] == 3 || (item[5] == 0 && new Date(Number(item[4]) * 1000) < new Date()))
                 }).map((row, idx) => (
-                <tr key={idx} className="hover:bg-gray-100">
+                <tr key={idx} className="hover:bg-gray-100 text-black">
                     <td className="border border-gray-300 px-2 py-1">
                         {row[1]}
                     </td>

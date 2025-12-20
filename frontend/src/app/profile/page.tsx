@@ -64,7 +64,7 @@ function ProfilePage() {
         <main className="flex-1 flex flex-col items-center px-6 py-16 bg-gray-50">
             <div className="w-full max-w-5xl space-y-10">
             <div className="relative bg-white shadow rounded-xl px-5 py-2">
-                <div className="left-6 py-1 rounded-md text-3xl font-semibold">
+                <div className="left-6 py-1 rounded-md text-3xl font-semibold text-black">
                 Info
                 </div>
                 <div className="mt-4 space-y-3 text-gray-700 text-lg">
@@ -87,14 +87,14 @@ function ProfilePage() {
                 </div>
             </div>
             <div className="relative bg-white shadow rounded-xl px-5 py-2">
-                <div className="flex flex-row justify-between left-6 py-1 rounded-md text-3xl font-semibold">
+                <div className="text-black flex flex-row justify-between left-6 py-1 rounded-md text-3xl font-semibold">
                     History
                     <div className="flex flex-row items-center gap-2">
-                        <label className="text-sm">Buyer</label>
+                        <label className="text-sm text-black">Buyer</label>
                         <div onClick={() => setIsBuyer(!isBuyer)} className="w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition bg-gray-300">
                             <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition ${isBuyer ? "translate-x-0" : "translate-x-6"}`}></div>
                         </div>
-                        <label className="text-sm">Seller</label>
+                        <label className="text-sm text-black">Seller</label>
                     </div>
                 </div>
                 {!user ? <div></div> : isBuyer ? <BuyerTable history={history}/> : <SellerTable history={history}/> }
